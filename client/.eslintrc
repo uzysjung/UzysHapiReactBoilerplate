@@ -1,0 +1,24 @@
+{
+  "root"    : true,
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard-react"
+  ],
+  "plugins" : [],
+  "env"     : {
+    "browser" : true
+  },
+  "globals" : {
+    "Action"       : false,
+    "__DEV__"      : false,
+    "__PROD__"     : false,
+    "__DEBUG__"    : false,
+    "__DEBUG_NEW_WINDOW__" : false,
+    "__BASENAME__" : false
+  },
+  "rules": {
+    "semi" : [2, "never"],
+    "max-len": [2, 180, 2],
+    "react/jsx-indent": [0, 0]
+  }
+}
