@@ -74,6 +74,7 @@
     "react-tap-event-plugin" : "1.0.0",
     "jquery": "^3.1.x",
     "font-awesome-webpack2": "0.0.5",
+    "font-awesome" : "^4.6.3",
     "store" : "1.3.20",
     "classnames" : "^2.2.x",
     "radium" : "^0.18.x",

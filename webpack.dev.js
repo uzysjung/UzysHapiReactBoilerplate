@@ -11,7 +11,7 @@ module.exports = {
   stats: { colors: true },
   entry:   [
     'react-hot-loader/patch',
-    'webpack-hot-middleware/client?path=http://localhost:'+ config.port+'/__webpack_hmr',
+    'webpack-hot-middleware/client?path=http://localhost:'+ config.PORT+'/__webpack_hmr',
     'webpack/hot/only-dev-server',
     './client/src/index'
   ],
