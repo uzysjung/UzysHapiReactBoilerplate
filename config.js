@@ -9,7 +9,6 @@ class Config {
 
     }
     get NODE_ENV() {
-
         return process.env.NODE_ENV;
     }
     get HOSTNAME() {
@@ -19,21 +18,20 @@ class Config {
 
         return 'localhost'
     }
-    get mysql() {
+    get MYSQL() {
 
         let ret = {
             host     : 'production.io',
             user     : 'root',
             password : 'root',
-            database : 'UzysHapireactBoilerplate'
+            database : 'UzysHapiReactBoilerplate'
         };
-        if (this.type === 'development') {
-
+        if (this.NODE_ENV === 'development') {
             ret = {
                 host: 'localhost',
                 user: 'root',
                 password: 'root',
-                database: 'UzysHapireactBoilerplate'
+                database: 'UzysHapiReactBoilerplate'
             };
         }
         return ret;
@@ -46,7 +44,7 @@ class Config {
 
         return { min: 0, max: 20 };
     }
-    get port() {
+    get PORT() {
 
         if (this.NODE_ENV === 'development') {
             return 8000;

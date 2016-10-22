@@ -8,7 +8,7 @@ const Config = require('./config');
 const server = new Hapi.Server();
 const Co = require('co');
 
-server.connection({ port: Config.port, routes: { cors: true , jsonp: 'callback' } });
+server.connection({ port: Config.PORT, routes: { cors: true , jsonp: 'callback' } });
 
 Co(function*() {
 
@@ -29,7 +29,7 @@ Co(function*() {
     }
 
     server.route( { method: 'GET', path: '/{path*}', config: {auth: false,  handler: { directory: { path: './public' ,redirectToSlash: true } } } });
-    // server.route(require('./server/routes/api'));
+     server.route(require('./server/routes/api'));
     server.route(require('./server/routes/user'));
 
 

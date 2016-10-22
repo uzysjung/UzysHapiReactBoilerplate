@@ -1,0 +1,55 @@
+#
+# SQL Export
+# Created by Querious (1048)
+# Created: 2016년 10월 22일 오후 1시 45분 5초 GMT+9
+# Encoding: Unicode (UTF-8)
+#
+
+
+DROP DATABASE IF EXISTS `UzysHapiReactBoilerplate`;
+CREATE DATABASE `UzysHapiReactBoilerplate` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+USE `UzysHapiReactBoilerplate`;
+
+
+
+
+SET @PREVIOUS_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
+SET FOREIGN_KEY_CHECKS = 0;
+
+
+DROP TABLE IF EXISTS `USER`;
+
+
+CREATE TABLE `USER` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login_email` varchar(128) DEFAULT NULL,
+  `login_pw` varchar(128) DEFAULT NULL,
+  `contact` varchar(128) DEFAULT NULL,
+  `role` enum('ADMIN','USER') NOT NULL DEFAULT 'USER',
+  PRIMARY KEY (`id`),
+  KEY `index_login_email` (`login_email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+
+
+SET FOREIGN_KEY_CHECKS = @PREVIOUS_FOREIGN_KEY_CHECKS;
+
+
+SET @PREVIOUS_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
+SET FOREIGN_KEY_CHECKS = 0;
+
+
+LOCK TABLES `USER` WRITE;
+ALTER TABLE `USER` DISABLE KEYS;
+INSERT INTO `USER` (`id`, `login_email`, `login_pw`, `contact`, `role`) VALUES 
+	(1,'test@test.com','$2a$10$M86DLVJ6tyAXBdpyAI0VeeWwsGs6DBiQsSwTK2K715/kLf85SO/RC',NULL,'USER');
+ALTER TABLE `USER` ENABLE KEYS;
+UNLOCK TABLES;
+
+
+
+
+SET FOREIGN_KEY_CHECKS = @PREVIOUS_FOREIGN_KEY_CHECKS;
+
+
