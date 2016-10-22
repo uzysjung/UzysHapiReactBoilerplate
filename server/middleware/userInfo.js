@@ -13,17 +13,17 @@ const internals = {};
 // assign authUserInfo
 internals.authUserInfo = function (request,reply) {
 
-    const userID = request.auth.credentials.id;
+    const userID = _.get(request.auth.credentials,'id');
     Co(function*(){
 
         if (_.isNil(userID)) {
-            reply( { error: 'userID is Nil' } );
+            return reply( { error: 'userID is Nil' } );
         }
         const data  = yield modelUser.fetch({ id: userID });
         if (data && data.length === 0) {
-            reply( { error : 'No User Data' } );
+            return reply( { error : 'No User Data' } );
         }
-        reply( { role:data[0].role } );
+        return reply( { id:data[0].id , role:data[0].role ,email :data[0].login_email } );
 
     }).catch( (e) => {
 

@@ -7,12 +7,17 @@ const Joi = require('joi');
 
 module.exports = {
 
-    list : {
+    authInfo : {
         query: {
-            page: Joi.number().integer().description('page')
-        },
+            token: Joi.string().description('token')
+        }
+    },
+    github : {
         params: {
-            id: Joi.number().integer().description('API ID')
+            userID : Joi.string().description('github id')
+        },
+        query: {
+            token: Joi.string().description('token')
         }
     }
 };
