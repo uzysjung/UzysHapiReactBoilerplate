@@ -7,6 +7,7 @@ import PageHeader from '../../components/page/PageHeader'
 import PageContent from '../../components/page/PageContent'
 import Box from '../../components/widget/Box'
 import { connect } from 'react-redux'
+import { FormGroup , InputGroup, FormControl, Button, Grid , Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -16,20 +17,15 @@ class HomePage extends React.Component {
     componentWillMount() {
     }
     componentDidMount() {
-        this.props.selectedItem(9);
+        console.log('this.props.route',this.props.route)
     }
     render() {
         return (
             <PageWrapper>
                 <PageHeader
-                    title="Home page"
+                    title="Github User Search"
                     description="Welcome to the Home page"
                 >
-                    <Breadcrumb
-                        items={[
-                            { key: 1, icon: 'fa fa-home', title: 'Home', url: '/' }
-                        ]}
-                    />
                 </PageHeader>
                 <PageContent>
                     <Box
@@ -38,11 +34,39 @@ class HomePage extends React.Component {
                         expandable
                         removable
                     >
-                        Now Under Construction. 미안 보여줄께 없네
+                            <Row>
+                                <Col md={12} xs={12}>
+                                    <form>
+                                        <FormGroup>
+                                            <InputGroup>
+                                                <FormControl type="text" placeholder="Type Github UserID" />
+                                                <InputGroup.Button>
+                                                    <Button>Search</Button>
+                                                </InputGroup.Button>
+                                            </InputGroup>
+                                        </FormGroup>
+                                    </form>
+                                </Col>
+                            </Row>
+
                     </Box>
                 </PageContent>
             </PageWrapper>
         );
+    }
+    renderList() {
+        return (
+            <Row>
+                <Col md={12} >
+                    <ListGroup>
+                        <ListGroupItem>Item 1</ListGroupItem>
+                        <ListGroupItem>Item 2</ListGroupItem>
+                        <ListGroupItem>...</ListGroupItem>
+                    </ListGroup>
+                </Col>
+            </Row>
+
+        )
     }
 }
 

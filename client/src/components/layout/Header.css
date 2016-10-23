@@ -1,0 +1,18 @@
+.dropdown-menu {
+    text-align : center
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+    color: black !important;
+    font-weight: bold !important;
+    background-color: transparent !important;
+}
+.dropdown-menu> li >a, .dropdown-menu> {
+    color: black !important;
+    background-color: transparent !important;
+}
+
+.dropdown-menu> li >a:hover, .dropdown-menu> li >a:focus {
+    color: #2c3e50 !important;
+    background-color: transparent !important;
+}

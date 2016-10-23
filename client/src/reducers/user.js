@@ -4,7 +4,7 @@
 
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR  ,GET_USER_DATA , FAILED_USER_DATA , PUT_USER_DATA ,WAITING_USER_DATA} from '../constants';
 
-export default function(state = {}, action) {
+export default function(state = {authenticated:false}, action) {
     // console.log('state:',state);
     switch(action.type) {
         case AUTH_USER:

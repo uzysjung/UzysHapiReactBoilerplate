@@ -12,9 +12,11 @@ import { store , history } from './store'
 import 'font-awesome-webpack2'
 // import '../../node_modules/bootstrap/dist/js/bootstrap'
 import NotFoundPage from './containers/pages/NotFoundPage'
-import Layout from './components/layout/Layout'
+import Layout from './containers/layout'
 import HomePage from './containers/pages/HomePage'
-
+import GithubPage from './containers/pages/GithubPage'
+import LoginPage from './containers/pages/LoginPage'
+import SignupPage from './containers/pages/SignupPage.js'
 
 const UserIsAuthenticated = UserAuthWrapper({
     authSelector: state => state.auth,
@@ -44,11 +46,11 @@ export default function App() {
                 <Route path='/' component={Layout}>
                     <IndexRoute component={HomePage} />
                     {/*<IndexRoute component={UserIsAuthenticated(HomePage)} />*/}
-                    {/*<Route path='examples/blank-page' component={BlankPage} />*/}
+                    <Route path='/github' component={GithubPage} />
                     {/*<Route path='profile' component={UserIsAuthenticated(ProfilePage)} />*/}
                 </Route>
-                {/*<Route path='/login' component={HomePage} />*/}
-                {/*<Route path='/register' component={RegisterPage} />*/}
+                <Route path='/login' component={LoginPage} />
+                <Route path='/signup' component={SignupPage} />
                 <Route path='*' component={NotFoundPage} />
             </Router>
         </Provider>
@@ -57,7 +59,7 @@ export default function App() {
 const propTypes = {
     store: PropTypes.object,
     history : PropTypes.object,
-    // Layout : PropTypes.component
+    // layout : PropTypes.component
 };
 App.propTypes = propTypes;
 
