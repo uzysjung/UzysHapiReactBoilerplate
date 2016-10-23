@@ -4,10 +4,8 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR , GET_USER_DATA , PUT_USER_DATA , WAITING_USER_DATA, FAILED_USER_DATA , AUTH_VALIDATION_FAILED} from '../constants';
-import { PORT } from '../../config';
-import { selectedService_ID } from './sideMenu'
-import config from '../../config';
-const HOSTNAME = '10.202.31.160';
+//import { selectedService_ID } from './sideMenu'
+import { HOSTNAME , PORT } from '../../../config'
 const ROOT_URL = `http://${HOSTNAME}:${PORT}`;
 
 
@@ -36,9 +34,7 @@ export function registerUser({ email, password , passwordVerify}) {
             // axios.defaults.headers.common['Authorization'] = response.data.token;
             // 3. redirect to /f
             browserHistory.push('/');
-            if(response.data.service_ids && response.data.service_ids.length > 0) {
-                dispatch(selectedService_ID(response.data.service_ids[0].service_id));
-            }
+
         }).catch((e) => {
 
             let failedMessage = e.message;
@@ -77,7 +73,7 @@ export function signinUser({ email, password }) {
             // axios.defaults.headers.common['Authorization'] = response.data.token;
             // 3. redirect to /f
             browserHistory.push('/');
-            if(response.data.service_ids.length > 0) dispatch(selectedService_ID(response.data.service_ids[0].service_id));
+
         }).catch(() => {
             // Else,
             // 1. Show error

@@ -8,7 +8,8 @@ import Footer from '../../components/layout/Footer';
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Radium from 'radium'
-
+import { browserHistory } from 'react-router'
+import { signoutUser } from '../../actions/user.js'
 const menuItem = [
     {
         key : 1,
@@ -57,16 +58,9 @@ const loginMenu =
             key : 200 ,
             title : 'username',
             subMenu :[
+
                 {
                     key :200.1,
-                    title : 'sample1',
-                    url : '/sample'
-                },
-                {
-                    seperator : true
-                },
-                {
-                    key :200.2,
                     title : 'Logout',
                     url : '/logout'
                 }
@@ -78,16 +72,71 @@ class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedMenuKey : 3.1
+            selectedMenuKey : 1
         };
         this.handleMenuclick = this.handleMenuclick.bind(this);
     }
     handleMenuclick(mainKey,event) {
-        this.setState({
-            selectedMenuKey : mainKey
-        })
+
+        if(mainKey < 100) {
+            this.setState({
+                selectedMenuKey : mainKey
+            })
+            const url = this.getURLfromMenu(mainKey);
+            browserHistory.push(url);
+        } else {
+            //Login Menu
+            if(this.props.authenticated) {
+                //Login Menu
+                for(const subItem of loginMenu.Login.subMenu) {
+                    if(subItem.key.toString() == '200.1') {
+                        this.props.signoutUser()
+                    }
+                }
+            } else {
+                //NoLoginMenu
+                browserHistory.push(loginMenu.noLogin.url);
+            }
+        }
+
+
+    }
+    getURLfromMenu( key ) {
+
+        for ( const item of menuItem ) {
+            if( key === item.key ) return item.url;
+            if( item.subMenu && item.subMenu.length > 0 ) {
+                for( const subItem of item.subMenu) {
+                    if(key === subItem.key) return subItem.url;
+                }
+            }
+        }
+
+
+
+    }
+    setselectedMenuKey(url) {
+
+        for ( const item of menuItem ) {
+            if( item.url.length === 1 && url == item.url || item.url.length > 1 && _.startsWith( url ,item.url) ) {
+                console.log('url',url)
+                console.log('item::',item)
+                return item.key;
+            }
+            if( item.subMenu && item.subMenu.length > 0 ) {
+                for( const subItem of item.subMenu) {
+                    if( subItem.url.length === 1 && url == subItem.url || subItem.url.length > 1 && _.startsWith( url ,subItem.url) )  return subItem.key;
+                }
+            }
+        }
+
     }
     componentWillMount() {
+        const curMenuKey = this.setselectedMenuKey(this.props.location.pathname);
+        console.log('curMenuKey',curMenuKey)
+        this.setState({
+            selectedMenuKey : curMenuKey
+        })
     }
     componentDidMount() {
     }
@@ -116,6 +165,6 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, { })(Radium(Layout));
+export default connect(mapStateToProps, { signoutUser })(Radium(Layout));
 
 

@@ -17,7 +17,7 @@ class HomePage extends React.Component {
     componentWillMount() {
     }
     componentDidMount() {
-        console.log('this.props.route',this.props.route)
+        //console.log('this.props.route',this.props.route)
     }
     render() {
         return (

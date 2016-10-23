@@ -1,5 +1,4 @@
 import React, { PropTypes,Component } from 'react'
-import { browserHistory } from 'react-router'
 import { Navbar , Nav , NavItem , NavDropdown, MenuItem } from 'react-bootstrap'
 import Pkg from '../../../../package.json'
 import Radium from 'radium'
@@ -23,10 +22,8 @@ class Header extends Component {
 
     handleItemClick = (eventKey,event) => {
         this.props.handleMenuclick(eventKey,event);
+        //console.log('eventKey',eventKey);
 
-        console.log('eventKey',eventKey);
-
-        //browserHistory.push(evtMenu[eventKey]);
     }
 
     renderLoginMenu() {
@@ -59,8 +56,6 @@ class Header extends Component {
     }
     renderNavItem(item) {
         if( _.isArray(item.subMenu) ) {
-            console.log('item.key',item.key);
-            console.log('this.props.selectedMenuKey',this.props.selectedMenuKey)
             return (
                 <NavDropdown active={item.key === this.props.selectedMenuKey} key={item.key} eventKey={item.key} onSelect={this.handleItemClick} id={item.key} title={item.title}  style={{}}>
                     {this.renderSubItem(item.subMenu)}
@@ -78,7 +73,7 @@ class Header extends Component {
         const selectedMenuKey = this.props.selectedMenuKey;
         return (
             subItems.map ( function(item,index) {
-                console.log('item:',item);
+                //console.log('item:',item);
 
                 let subItemMenu ;
                 if(item.seperator) {
