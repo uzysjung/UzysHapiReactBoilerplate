@@ -1,7 +1,7 @@
 #
 # SQL Export
 # Created by Querious (1048)
-# Created: 2016년 10월 22일 오후 1시 45분 5초 GMT+9
+# Created: 2016년 10월 24일 오후 9시 30분 30초 GMT+9
 # Encoding: Unicode (UTF-8)
 #
 
@@ -27,8 +27,8 @@ CREATE TABLE `USER` (
   `contact` varchar(128) DEFAULT NULL,
   `role` enum('ADMIN','USER') NOT NULL DEFAULT 'USER',
   PRIMARY KEY (`id`),
-  KEY `index_login_email` (`login_email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `index_login_email` (`login_email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 
 
@@ -43,7 +43,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 LOCK TABLES `USER` WRITE;
 ALTER TABLE `USER` DISABLE KEYS;
 INSERT INTO `USER` (`id`, `login_email`, `login_pw`, `contact`, `role`) VALUES 
-	(1,'test@test.com','$2a$10$M86DLVJ6tyAXBdpyAI0VeeWwsGs6DBiQsSwTK2K715/kLf85SO/RC',NULL,'USER');
+	(1,'test@test.com','$2a$10$M86DLVJ6tyAXBdpyAI0VeeWwsGs6DBiQsSwTK2K715/kLf85SO/RC',NULL,'ADMIN'),
+	(2,'aa@a.com','$2a$10$9VNG53zFCVjqj554/gziQ.L5A1NgsCnyOHuIoMQqKF/fqt1Rs61be',NULL,'USER'),
+	(3,'test@ttt.com','$2a$10$.KtoC5Nqj0B4pqoCM6nIiOsvC9.AI4HMQrTVCOow2COH9sC.Jskp6',NULL,'USER'),
+	(4,'aaa@aaa.com','$2a$10$I25bBPAzoYVDBr/PuotKWeJaxevlOLFSYTpFE4rMSPGuGkGAPiYTi',NULL,'USER'),
+	(6,'test@test2.com','$2a$10$zzrg1/3Kr8MCGQs1XODaqORuxzEHDdDyFrZuWli1Tn2mmY28A3i2y',NULL,'USER');
 ALTER TABLE `USER` ENABLE KEYS;
 UNLOCK TABLES;
 

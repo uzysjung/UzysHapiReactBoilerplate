@@ -12,11 +12,12 @@ export default function(state = {authenticated:false}, action) {
                 ...state,
                 email : action.email,
                 authenticated: true,
-                service_ids : action.service_ids
+                isAdmin : action.isAdmin
             };
         case UNAUTH_USER:
             return {
                 authenticated: false,
+
             };
         case AUTH_ERROR:
             return {

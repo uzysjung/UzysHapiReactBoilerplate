@@ -29,7 +29,7 @@ Co(function*() {
     }
 
     server.route( { method: 'GET', path: '/{path*}', config: {auth: false,  handler: { directory: { path: './public' ,redirectToSlash: true } } } });
-     server.route(require('./server/routes/api'));
+    server.route(require('./server/routes/api'));
     server.route(require('./server/routes/user'));
 
 

@@ -59,18 +59,20 @@ export function signinUser({ email, password }) {
 
         request.then(response => {
             console.log('response:',response);
+            const isAdmin = response.data.role === 'ADMIN' ? true : false;
             // If verified,
             // 1. update state to authenticated
             dispatch({
                 type: AUTH_USER,
                 email : email,
+                isAdmin : isAdmin
             });
             // 2. save jwt token
             localStore.set('token', response.data.token);
             localStore.set('email', email);
-
+            localStore.set('isAdmin', isAdmin);
             // axios.defaults.headers.common['Authorization'] = response.data.token;
-            // 3. redirect to /f
+
             browserHistory.push('/');
 
         }).catch(() => {
@@ -84,6 +86,7 @@ export function signinUser({ email, password }) {
 export function signoutUser() {
     localStore.remove('token');
     localStore.remove('email');
+    localStore.remove('isAdmin');
     return {
         type: UNAUTH_USER,
     };
@@ -92,6 +95,7 @@ export function signoutUser() {
 export function authError(error) {
     localStore.remove('token');
     localStore.remove('email');
+    localStore.remove('isAdmin');
 
     return {
         type: AUTH_ERROR,
@@ -101,11 +105,13 @@ export function authError(error) {
 
 export function authUser() {
     const email = localStore.get('email');
+    const isAdmin = localStore.get('isAdmin');
 
 
     return {
         type: 'AUTH_USER',
         email : localStore.get('email'),
+        isAdmin : isAdmin
     }
 }
 export function putUserData(data) {

@@ -90,12 +90,12 @@ class DashUser extends UzysDB {
             if (isValid === false) {
                 throw new Error('wrong password');
             }
-            return self.token(data[0].id);
+            return self.token(data[0].id, data[0].role);
 
         });
     }
-    token(userId) {
-        return { token: Jwt.sign({ id: userId }, Config.SECRET_KEY, { expiresIn: '48h' }) ,userID : userId};
+    token(userId , role) {
+        return { token: Jwt.sign({ id: userId }, Config.SECRET_KEY, { expiresIn: '48h' }) ,userID : userId , role};
     }
 
     validate(decoded, request, callback) {

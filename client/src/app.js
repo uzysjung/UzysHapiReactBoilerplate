@@ -31,7 +31,7 @@ const UserIsAuthenticated = UserAuthWrapper({
 const UserIsAdmin = UserAuthWrapper({
     authSelector: state => state.auth,
     redirectAction: routerActions.replace,
-    failureRedirectPath: '/login',
+    failureRedirectPath: '/',
     wrapperDisplayName: 'UserIsAdmin',
     predicate: auth => auth.isAdmin,
     allowRedirectBack: false
