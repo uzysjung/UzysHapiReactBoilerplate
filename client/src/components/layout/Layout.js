@@ -5,7 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 const propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 export default function Layout({ children }) {
     return (

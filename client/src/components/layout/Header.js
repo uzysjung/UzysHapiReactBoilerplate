@@ -34,7 +34,7 @@ class Header extends Component {
         } else {
             const menu = this.props.loginMenu.Login;
             return (
-                <NavDropdown eventKey={menu.key} onSelect={this.handleItemClick} title={menu.title} id='LoginMenu'>
+                <NavDropdown eventKey={menu.key} onSelect={this.handleItemClick} title={menu.title} id='LoginMenu' style={{ minWidth : 160 , textAlign : 'center' }}>
                     {
                         menu.subMenu.map ( function(item) {
 
@@ -42,7 +42,7 @@ class Header extends Component {
                             if(item.seperator) {
                                 subItemMenu = <MenuItem divider />
                             } else {
-                                subItemMenu = <MenuItem eventKey={item.key} >{item.title}</MenuItem>
+                                subItemMenu = <MenuItem key={item.key} eventKey={item.key} >{item.title}</MenuItem>
                             }
 
                             return subItemMenu;

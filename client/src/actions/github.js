@@ -30,7 +30,7 @@ export function reqGithub() {
 
 
 export function fetchGithub ( userID ) {
-    return axiosGetRequest(`api/Github${user_id}`,{},
+    return axiosGetRequest(`api/github/user/${userID}`,{},
         reqGithub,recvGithubError,recvGithub)
 }
 

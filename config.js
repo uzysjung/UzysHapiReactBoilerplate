@@ -53,7 +53,7 @@ class Config {
     }
 
     get MYSQL_TIMEOUT() {
-        return 1500;
+        return 2500;
     }
 
     get SECRET_KEY() {

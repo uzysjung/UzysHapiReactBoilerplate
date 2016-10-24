@@ -3,5 +3,5 @@
  */
 
 import user from './user'
-
-module.exports = { auth : user };
+import github from './github'
+module.exports = { auth : user  ,github};

@@ -26,10 +26,11 @@ export function axiosGetRequest (url,query,reqAction,errAction,recvAction) {
 
         if(query) config.params = query;
 
-        console.log('config:',config);
+        //console.log('config:',config);
         const request = axios(config);
 
         request.then(response => {
+            console.log('response:',response)
             dispatch(recvAction(response.data));
         }).catch((error) => {
             console.log(error.response);

@@ -7,8 +7,9 @@ import Box from '../../components/widget/Box'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { routerActions } from 'react-router-redux'
+import { signinUser , failedUserData } from '../../actions/user'
 
-import { Grid , Panel, Jumbotron, Form , FormGroup, Col, Button, FormControl, Checkbox, ControlLabel , PageHeader} from 'react-bootstrap'
+import { Grid , Panel, Jumbotron, Form , FormGroup, Col, Button, FormControl, Checkbox, ControlLabel , PageHeader, Alert } from 'react-bootstrap'
 import Radium from 'radium'
 import Pkg from '../../../../package.json'
 
@@ -32,6 +33,10 @@ const styleLogin = {
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            email : '',
+            password : ''
+        }
     }
 
     componentWillMount() {
@@ -41,6 +46,69 @@ class LoginPage extends React.Component {
         }
     }
     componentDidMount() {
+    }
+
+    componentWillUnmount() {
+        this.props.failedUserData(null);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // console.log('nextProps',nextProps);
+        const { authenticated, replace, redirect } = nextProps;
+        const { authenticated: wasAuthenticated } = this.props;
+
+        if (!wasAuthenticated && authenticated) {
+            replace(redirect)
+        }
+    }
+
+    handleFormSubmit = (e) => {
+        e.preventDefault();
+        const { email, password } = this.state;
+
+        if ( !email || email.length < 1) {
+            this.props.failedUserData('Insert Email address');
+            return;
+        }
+
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+            this.props.failedUserData('Please check whether this email is valid');
+            return
+        }
+        if (!password) {
+            this.props.failedUserData('Insert Password');
+            return;
+        }
+        if ( password && password.length < 8 ) {
+            this.props.failedUserData('Password must be longer than 8 charaters');
+            return;
+        }
+
+
+        this.props.signinUser({ email, password });
+
+    };
+    handleForChange = (e) => {
+        console.log('e.target.id',e.target.id);
+        switch(e.target.id) {
+            case 'formHorizontalEmail' :
+                this.setState( { email : e.target.value } );
+                break;
+            case 'formHorizontalPassword' :
+                this.setState( { password : e.target.value } );
+                break;
+        }
+    };
+
+    renderAlert() {
+        if (this.props.errorMessage) {
+            return (
+                <Alert bsStyle="danger">
+                    {this.props.errorMessage}
+                </Alert>
+            )
+        }
+        return null;
     }
     render() {
         return (
@@ -53,13 +121,13 @@ class LoginPage extends React.Component {
                         >
 
 
-                        <Form horizontal>
+                        <Form onSubmit={this.handleFormSubmit} horizontal>
                             <FormGroup controlId="formHorizontalEmail">
                                 <Col componentClass={ControlLabel} sm={2}>
                                     Email
                                 </Col>
                                 <Col sm={10}>
-                                    <FormControl type="email" placeholder="Email" />
+                                    <FormControl type="email" placeholder="Email" value={this.state.email} onChange={this.handleForChange} />
                                 </Col>
                             </FormGroup>
 
@@ -68,7 +136,7 @@ class LoginPage extends React.Component {
                                     Password
                                 </Col>
                                 <Col sm={10}>
-                                    <FormControl type="password" placeholder="Password" />
+                                    <FormControl type="password" placeholder="Password"  value={this.state.password} onChange={this.handleForChange}  />
                                 </Col>
                             </FormGroup>
 
@@ -77,7 +145,7 @@ class LoginPage extends React.Component {
                                     <Checkbox>Remember me</Checkbox>
                                 </Col>
                             </FormGroup>
-
+                            {this.renderAlert()}
                             <FormGroup>
                                 <Col smOffset={2} sm={10}>
                                     <Button type="submit">
@@ -100,7 +168,7 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
     authenticated: PropTypes.bool.isRequired,
     replace: PropTypes.func.isRequired,
-    errorMessage : PropTypes.object
+    errorMessage : PropTypes.string
 };
 
 
@@ -115,6 +183,6 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, { replace: routerActions.replace } )(Radium(LoginPage));
+export default connect(mapStateToProps, { replace: routerActions.replace , signinUser , failedUserData } )(Radium(LoginPage));
 
 

@@ -3,8 +3,10 @@
  */
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import localStore from '../../../node_modules/store/store.js'
+
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR , GET_USER_DATA , PUT_USER_DATA , WAITING_USER_DATA, FAILED_USER_DATA , AUTH_VALIDATION_FAILED} from '../constants';
-//import { selectedService_ID } from './sideMenu'
+
 import { HOSTNAME , PORT } from '../../../config'
 const ROOT_URL = `http://${HOSTNAME}:${PORT}`;
 
@@ -25,12 +27,10 @@ export function registerUser({ email, password , passwordVerify}) {
             dispatch({
                 type: AUTH_USER,
                 email : email,
-                service_ids : response.data.service_ids
             });
             // 2. save jwt token
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('email', email);
-            localStorage.setItem('service_ids', JSON.stringify(response.data.service_ids));
+            localStore.set('token', response.data.token);
+            localStore.set('email', email);
             // axios.defaults.headers.common['Authorization'] = response.data.token;
             // 3. redirect to /f
             browserHistory.push('/');
@@ -64,12 +64,11 @@ export function signinUser({ email, password }) {
             dispatch({
                 type: AUTH_USER,
                 email : email,
-                service_ids : response.data.service_ids
             });
             // 2. save jwt token
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('email', email);
-            localStorage.setItem('service_ids', JSON.stringify(response.data.service_ids));
+            localStore.set('token', response.data.token);
+            localStore.set('email', email);
+
             // axios.defaults.headers.common['Authorization'] = response.data.token;
             // 3. redirect to /f
             browserHistory.push('/');
@@ -83,18 +82,16 @@ export function signinUser({ email, password }) {
 }
 
 export function signoutUser() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    localStorage.removeItem('service_ids');
+    localStore.remove('token');
+    localStore.remove('email');
     return {
         type: UNAUTH_USER,
     };
 }
 
 export function authError(error) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    localStorage.removeItem('service_ids');
+    localStore.remove('token');
+    localStore.remove('email');
 
     return {
         type: AUTH_ERROR,
@@ -103,18 +100,12 @@ export function authError(error) {
 }
 
 export function authUser() {
-    const email = localStorage.getItem('email');
-    let service_ids;
-    try {
-        service_ids = JSON.parse(localStorage.getItem('service_ids'));
-    } catch (e) {
-        console.error('authUser error:',localStorage.getItem('service_ids'))
-    }
+    const email = localStore.get('email');
+
 
     return {
         type: 'AUTH_USER',
-        email : localStorage.getItem('email'),
-        service_ids : service_ids
+        email : localStore.get('email'),
     }
 }
 export function putUserData(data) {
@@ -155,7 +146,7 @@ export function getUserDataAsync(url,query) {
 
         const config = {
             headers: {
-                Authorization : localStorage.getItem('token')
+                Authorization : localStore.get('token')
             }
         };
         let url = '/api/user';
@@ -186,7 +177,7 @@ export function putUserDataAsync(method,url,data) {
 
         const config = {
             headers: {
-                Authorization : localStorage.getItem('token')
+                Authorization : localStore.get('token')
             },
             timeout: 3000,
             baseURL : ROOT_URL,

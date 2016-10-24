@@ -30,7 +30,7 @@ const menuItem = [
             {
                 key :3.1,
                 title : 'sample1',
-                url : '/sample'
+                url : `/sample/1?query=hi`
             },
             {
                 seperator : true
@@ -38,7 +38,7 @@ const menuItem = [
             {
                 key :3.2,
                 title : 'sample2',
-                url : '/sample'
+                url : '/sample/2?query=hello'
             }
 
         ]
@@ -72,10 +72,13 @@ class Layout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedMenuKey : 1
+            selectedMenuKey : 1,
+            loginTitle : 'userName'
         };
+
         this.handleMenuclick = this.handleMenuclick.bind(this);
     }
+
     handleMenuclick(mainKey,event) {
 
         if(mainKey < 100) {
@@ -90,6 +93,7 @@ class Layout extends React.Component {
                 //Login Menu
                 for(const subItem of loginMenu.Login.subMenu) {
                     if(subItem.key.toString() == '200.1') {
+                        console.log('signPit')
                         this.props.signoutUser()
                     }
                 }
@@ -118,14 +122,23 @@ class Layout extends React.Component {
     setselectedMenuKey(url) {
 
         for ( const item of menuItem ) {
-            if( item.url.length === 1 && url == item.url || item.url.length > 1 && _.startsWith( url ,item.url) ) {
-                console.log('url',url)
-                console.log('item::',item)
-                return item.key;
+            if(_.hasIn(item,'url')) {
+
+                if( item.url.length === 1 && url == item.url || item.url.length > 1 && _.startsWith( url ,item.url) ) {
+
+                    return item.key;
+                }
+
             }
             if( item.subMenu && item.subMenu.length > 0 ) {
                 for( const subItem of item.subMenu) {
-                    if( subItem.url.length === 1 && url == subItem.url || subItem.url.length > 1 && _.startsWith( url ,subItem.url) )  return subItem.key;
+                    if(_.hasIn(subItem,'url')) {
+                        if( subItem.url.length === 1 && url == subItem.url || subItem.url.length > 1 && _.startsWith( url ,subItem.url) )
+                        {
+                            return subItem.key;
+                        }
+
+                    }
                 }
             }
         }
@@ -133,13 +146,19 @@ class Layout extends React.Component {
     }
     componentWillMount() {
         const curMenuKey = this.setselectedMenuKey(this.props.location.pathname);
-        console.log('curMenuKey',curMenuKey)
+
         this.setState({
             selectedMenuKey : curMenuKey
         })
+
+        loginMenu.Login.title = this.props.userEmail;
+
     }
     componentDidMount() {
+        console.log('didMount')
     }
+
+
     render() {
         return (
             <div>
@@ -160,7 +179,8 @@ Layout.propTypes = {
 function mapStateToProps(state, ownProps) {
 
     return {
-        authenticated : state.auth.authenticated
+        authenticated : state.auth.authenticated,
+        userEmail : state.auth.email || 'username'
     };
 
 }
