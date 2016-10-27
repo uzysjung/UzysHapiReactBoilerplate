@@ -4,7 +4,7 @@
 
 import axios from 'axios';
 import { authError } from './user';
-import { HOSTNAME , PORT } from '../../../config'
+import { HOSTNAME , PORT } from '../../config'
 const ROOT_URL = `http://${HOSTNAME}:${PORT}`;
 
 

@@ -7,7 +7,7 @@ import localStore from '../../../node_modules/store/store.js'
 
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR , GET_USER_DATA , PUT_USER_DATA , WAITING_USER_DATA, FAILED_USER_DATA , AUTH_VALIDATION_FAILED} from '../constants';
 
-import { HOSTNAME , PORT } from '../../../config'
+import { HOSTNAME , PORT } from '../../config'
 const ROOT_URL = `http://${HOSTNAME}:${PORT}`;
 
 

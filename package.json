@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2 start process.json",
     "test": "lab -C -c -m 2000 -I __core-js_shared__",
-    "debug": "./node_modules/devtool/bin/index.js app.js",
+    "debug": "export NODE_ENV=development && ./node_modules/devtool/bin/index.js app.js",
     "dev": "export NODE_ENV=development && unset API_ONLY &&node app.js",
     "devapi": "export NODE_ENV=development && export API_ONLY=true &&nodemon -e js,html app.js",
     "build": "rm -rf public && mkdir public && NODE_ENV=production webpack --progress --colors --display-error-details --config webpack.client.js",
