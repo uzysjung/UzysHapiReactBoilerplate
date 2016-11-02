@@ -17,7 +17,7 @@ class Config {
     }
     get PORT() {
 
-        if (this.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development') {
             return 8000;
         }
         return process.env.PORT || 8080;
