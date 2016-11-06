@@ -7,7 +7,7 @@ module.exports = {
   cache:   true,
   context: __dirname,
   debug:   true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: '#eval-source-map',
   stats: { colors: true },
   entry:   [
     'react-hot-loader/patch',

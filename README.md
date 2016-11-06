@@ -4,7 +4,9 @@ A boilerplate project with Hapi.js + React + Redux + Webpack
 ## Introduction
 **UzysHapiReactBoilerplate** is A boilerplate project with Hapi.js + React + Redux + Webpack
 
- - based on Hapi.js 15 and React 15
+ - Based on Hapi.js 15 and React 15
+ - Including redux - jwt Authentication Example (Server and Client)
+ - Including redux-thunk , axios data fetching example.
 
 ## Module
 
